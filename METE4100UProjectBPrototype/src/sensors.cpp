@@ -7,7 +7,6 @@
 int trigger;
 int echo;
 
-
 //reads the value of an ultrasonic sensor
 //returns the distance detected from the sensor in cm
 //"direction" is the direction of 
