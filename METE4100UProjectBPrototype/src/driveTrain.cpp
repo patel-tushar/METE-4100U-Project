@@ -13,7 +13,7 @@ int encoderBR;
 Adafruit_MotorShield drivetrain = Adafruit_MotorShield();
 
 void driveForward(TRUE_DIRECTION direction, double speed){
-
+  
   //Driving  
   if (direction == NORTH){ //Drive all wheels forwards
     drivetrain.getMotor(DT_FL)->run(DT_FL_FW);
