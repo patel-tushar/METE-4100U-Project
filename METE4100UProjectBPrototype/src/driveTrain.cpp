@@ -1,3 +1,4 @@
+//holds all moement systems
 #include <Arduino.h>
 #include <Adafruit_MS_PWMServoDriver.h>
 #include <Adafruit_MotorShield.h>
@@ -11,6 +12,112 @@ int encoderBL;
 int encoderBR;
 
 Adafruit_MotorShield drivetrain = Adafruit_MotorShield();
+
+//getters and setters for encoders
+int getEncoderFL(){
+  return encoderFL;
+}
+
+void setEncoderFL(int val){
+  encoderFL = val;
+}
+
+int getEncoderFR(){
+  return encoderFR;
+}
+
+void setEncoderFR(int val){
+  encoderFR = val;
+}
+
+int getEncoderBL(){
+  return encoderBL;
+}
+
+void setEncoderBL(int val){
+  encoderBL = val;
+}
+
+int getEncoderBR(){
+  return encoderBR;
+}
+
+void setEncoderBR(int val){
+  encoderBR = val;
+}
+
+
+//encoder events
+
+//front left encoder counter event
+void encoderEventFL(){
+  if (digitalRead(DT_FL_EN_C1) == HIGH) {
+    if (digitalRead(DT_FL_EN_C2) == LOW) {
+      encoderFL++;
+    } else {
+      encoderFL--;
+    }
+  } else {
+    if (digitalRead(DT_FL_EN_C2) == LOW) {
+      encoderFL--;
+    } else {
+      encoderFL++;
+    }
+  }
+}
+
+
+//front right encoder counter event
+void encoderEventFR(){
+  if (digitalRead(DT_FR_EN_C1) == HIGH) {
+    if (digitalRead(DT_FR_EN_C2) == LOW) {
+      encoderFR++;
+    } else {
+      encoderFR--;
+    }
+  } else {
+    if (digitalRead(DT_FR_EN_C2) == LOW) {
+      encoderFR--;
+    } else {
+      encoderFR++;
+    }
+  }
+}
+
+
+//back left encoder counter event
+void encoderEventBL(){
+  if (digitalRead(DT_BL_EN_C1) == HIGH) {
+    if (digitalRead(DT_BL_EN_C2) == LOW) {
+      encoderBL++;
+    } else {
+      encoderBL--;
+    }
+  } else {
+    if (digitalRead(DT_BL_EN_C2) == LOW) {
+      encoderBL--;
+    } else {
+      encoderBL++;
+    }
+  }
+}
+
+//back right encoder counter event
+void encoderEventBR(){
+  if (digitalRead(DT_BR_EN_C1) == HIGH) {
+    if (digitalRead(DT_BR_EN_C2) == LOW) {
+      encoderBR++;
+    } else {
+      encoderBR--;
+    }
+  } else {
+    if (digitalRead(DT_BR_EN_C2) == LOW) {
+      encoderBR--;
+    } else {
+      encoderBR++;
+    }
+  }
+}
 
 void driveForward(TRUE_DIRECTION direction, double speed){
   
@@ -42,5 +149,4 @@ void driveForward(TRUE_DIRECTION direction, double speed){
   drivetrain.getMotor(DT_FR)->setSpeedFine(speed);
   drivetrain.getMotor(DT_BL)->setSpeedFine(speed);
   drivetrain.getMotor(DT_BR)->setSpeedFine(speed);
-
 }
