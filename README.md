@@ -1,2 +1,2 @@
 # METE-4100U-Project
-My mechatronics design project
+My 4th year Mechatronics Design course project
