@@ -150,3 +150,13 @@ void driveForward(TRUE_DIRECTION direction, double speed){
   drivetrain.getMotor(DT_BL)->setSpeedFine(speed);
   drivetrain.getMotor(DT_BR)->setSpeedFine(speed);
 }
+
+void driveMotor(int motor, int direction, int speed){
+  if(direction = 1){
+    drivetrain.getMotor(motor)->run(FORWARD);
+  }else{
+    drivetrain.getMotor(motor)->run(FORWARD);
+  }
+
+  drivetrain.getMotor(motor)->setSpeed(speed);
+}

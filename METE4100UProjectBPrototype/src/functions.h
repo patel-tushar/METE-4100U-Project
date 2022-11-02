@@ -24,5 +24,7 @@ void encoderEventBR();
 
 void driveForward(TRUE_DIRECTION, double);
 
+void driveMotor(int, int, int);
+
 //main functions
 void setReferenceDirection(REF_DIRECTION);

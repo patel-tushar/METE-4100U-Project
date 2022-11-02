@@ -11,14 +11,32 @@ TRUE_DIRECTION right;
 TRUE_DIRECTION back;
 
 void setup() {
-  //initialize pins
-  
+  //inilialize encoder pins - all input pins
+  pinMode(DT_FL_EN_C1, INPUT);
+  pinMode(DT_FL_EN_C2, INPUT);
+  pinMode(DT_FR_EN_C1, INPUT);
+  pinMode(DT_FR_EN_C2, INPUT);
+  pinMode(DT_BL_EN_C1, INPUT);
+  pinMode(DT_BL_EN_C2, INPUT);
+  pinMode(DT_BR_EN_C1, INPUT);
+  pinMode(DT_BR_EN_C2, INPUT);
+
+  //initialize ultrasonic pins - tring pins output, echo pin input
+  pinMode(US_NORTH_TRIG, OUTPUT);
+  pinMode(US_NORTH_ECHO, INPUT);
+  pinMode(US_EAST_TRIG, OUTPUT);
+  pinMode(US_EAST_ECHO, INPUT);
+  pinMode(US_WEST_TRIG, OUTPUT);
+  pinMode(US_WEST_ECHO, INPUT);
+  pinMode(US_SOUTH_TRIG, OUTPUT);
+  pinMode(US_SOUTH_ECHO, INPUT);
 }
 
 
 void loop() {
   // put your main code here, to run repeatedly:
-  ultrasonicRead(NORTH);
+  driveMotor(DT_FL, 1, 100);
+
 }
 
 //sets the 

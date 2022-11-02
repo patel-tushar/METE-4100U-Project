@@ -36,17 +36,17 @@
 //define encoder pins
 //C1 = green pin, C2 = yellow pin
 
-#define DT_FL_EN_C1 31
-#define DT_FL_EN_C2 30
+#define DT_FL_EN_C1 46//31
+#define DT_FL_EN_C2 47//30
 
-#define DT_FR_EN_C1 23
-#define DT_FR_EN_C2 22
+#define DT_FR_EN_C1 52//23
+#define DT_FR_EN_C2 53//22
 
-#define DT_BL_EN_C1 27
-#define DT_BL_EN_C2 26
+#define DT_BL_EN_C1 42//27
+#define DT_BL_EN_C2 43//26
 
-#define DT_BR_EN_C1 35
-#define DT_BR_EN_C2 34
+#define DT_BR_EN_C1 36//35
+#define DT_BR_EN_C2 37//34
 
 
 //define pins for GYRO
@@ -64,11 +64,11 @@
 #define US_EAST_TRIG 6
 #define US_EAST_ECHO 7
 
-#define US_WEST_TRIG 8
-#define US_WEST_ECHO 9
+#define US_WEST_TRIG 28//8
+#define US_WEST_ECHO 29//9
 
-#define US_SOUTH_TRIG 10
-#define US_SOUTH_ECHO 11
+#define US_SOUTH_TRIG 32//10
+#define US_SOUTH_ECHO 33//11
 
 
 //define cartesian compass (true) directions
