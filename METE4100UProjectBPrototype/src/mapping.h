@@ -3,10 +3,10 @@
 
 
 //define motors on the arduino sheild
-#define DT_FL 2
-#define DT_FR 4
+#define DT_FL 4
+#define DT_FR 3
 #define DT_BL 1
-#define DT_BR 3
+#define DT_BR 2
 
 
 //drivetrain constants made for SFPIDS
@@ -20,11 +20,11 @@
 //define motor directions of rotation
 //FW = FORWARD, BW = BACKWARD
 
-#define DT_FL_FW FORWARD
-#define DT_FL_BW BACKWARD
+#define DT_FL_FW BACKWARD
+#define DT_FL_BW FORWARD
 
-#define DT_FR_FW BACKWARD
-#define DT_FR_BW FORWARD
+#define DT_FR_FW FORWARD
+#define DT_FR_BW BACKWARD
 
 #define DT_BL_FW BACKWARD
 #define DT_BL_BW FORWARD
@@ -36,17 +36,17 @@
 //define encoder pins
 //C1 = green pin, C2 = yellow pin
 
-#define DT_FL_EN_C1 46//31
-#define DT_FL_EN_C2 47//30
+#define DT_FL_EN_C1 23//31
+#define DT_FL_EN_C2 24//30
 
-#define DT_FR_EN_C1 52//23
-#define DT_FR_EN_C2 53//22
+#define DT_FR_EN_C1 25//23
+#define DT_FR_EN_C2 26//22
 
-#define DT_BL_EN_C1 42//27
-#define DT_BL_EN_C2 43//26
+#define DT_BL_EN_C1 27//27
+#define DT_BL_EN_C2 28//26
 
-#define DT_BR_EN_C1 36//35
-#define DT_BR_EN_C2 37//34
+#define DT_BR_EN_C1 29//35
+#define DT_BR_EN_C2 30//34
 
 
 //define pins for GYRO
@@ -58,17 +58,17 @@
 //define pins for ultrasonic pinmode
 //Trig pin is an output pin that shoots out a signal
 //Echo is the pin that recieves the value
-#define US_NORTH_TRIG 4
-#define US_NORTH_ECHO 5
+#define US_NORTH_TRIG 48
+#define US_NORTH_ECHO 49
 
-#define US_EAST_TRIG 6
-#define US_EAST_ECHO 7
+#define US_EAST_TRIG 53
+#define US_EAST_ECHO 52
 
-#define US_WEST_TRIG 28//8
-#define US_WEST_ECHO 29//9
+#define US_WEST_TRIG 45//8
+#define US_WEST_ECHO 44//9
 
-#define US_SOUTH_TRIG 32//10
-#define US_SOUTH_ECHO 33//11
+#define US_SOUTH_TRIG 39//10
+#define US_SOUTH_ECHO 38//11
 
 
 //define cartesian compass (true) directions

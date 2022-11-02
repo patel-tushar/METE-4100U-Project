@@ -3,6 +3,7 @@
 #include <Adafruit_MS_PWMServoDriver.h>
 #include <Adafruit_MotorShield.h>
 #include <SPI.h>
+#include <Wire.h>
 #include "mapping.h"
 #include "functions.h"
 
@@ -12,6 +13,18 @@ int encoderBL;
 int encoderBR;
 
 Adafruit_MotorShield drivetrain = Adafruit_MotorShield();
+
+void initializeSheild(){
+  //set up analog resolution
+  //analogReadResolution(12);
+
+
+  if (!drivetrain.begin(1600, &Wire)) {   // create with the default frequency 1.6KHz
+  // if (!AFMS.begin(1000)) {  // OR with a different frequency, say 1KHz
+  Serial.println("Could not find Motor Shield. Check wiring.");
+    while (1);
+  }
+}
 
 //getters and setters for encoders
 int getEncoderFL(){
@@ -119,44 +132,54 @@ void encoderEventBR(){
   }
 }
 
-void driveForward(TRUE_DIRECTION direction, double speed){
+void drive(TRUE_DIRECTION direction, int speed){
   
   //Driving  
   if (direction == NORTH){ //Drive all wheels forwards
-    drivetrain.getMotor(DT_FL)->run(DT_FL_FW);
-    drivetrain.getMotor(DT_FR)->run(DT_FR_FW);
-    drivetrain.getMotor(DT_BL)->run(DT_BL_FW);
-    drivetrain.getMotor(DT_BR)->run(DT_BR_FW);
+    driveMotor(DT_FL, 2, speed);
+    driveMotor(DT_FR, 1, speed);
+    driveMotor(DT_BL, 2, speed);
+    driveMotor(DT_BR, 1, speed);
   } else if (direction == SOUTH){ //Drive all wheels backwards
-    drivetrain.getMotor(DT_FL)->run(DT_FL_BW);
-    drivetrain.getMotor(DT_FR)->run(DT_FR_BW);
-    drivetrain.getMotor(DT_BL)->run(DT_BL_BW);
-    drivetrain.getMotor(DT_BR)->run(DT_BR_BW);
+    driveMotor(DT_FL, 1, speed);
+    driveMotor(DT_FR, 2, speed);
+    driveMotor(DT_BL, 1, speed);
+    driveMotor(DT_BR, 2, speed);
   } else if (direction == EAST){ //Drive towards centre for right and away of centre for left
-    drivetrain.getMotor(DT_FL)->run(DT_FL_FW);
-    drivetrain.getMotor(DT_FR)->run(DT_FR_BW);
-    drivetrain.getMotor(DT_BL)->run(DT_BL_BW);
-    drivetrain.getMotor(DT_BR)->run(DT_BR_FW);
+    driveMotor(DT_FL, 2, speed);
+    driveMotor(DT_FR, 2, speed);
+    driveMotor(DT_BL, 1, speed);
+    driveMotor(DT_BR, 1, speed);
   } else if (direction == WEST){ //Drive towards centre for left and away of centre for right
-    drivetrain.getMotor(DT_FL)->run(DT_FL_BW);
-    drivetrain.getMotor(DT_FR)->run(DT_FR_FW);
-    drivetrain.getMotor(DT_BL)->run(DT_BL_FW);
-    drivetrain.getMotor(DT_BR)->run(DT_BR_BW);
+    driveMotor(DT_FL, 1, speed);
+    driveMotor(DT_FR, 1, speed);
+    driveMotor(DT_BL, 2, speed);
+    driveMotor(DT_BR, 2, speed);
   }
-
-  //set drivetrain speeds
-  drivetrain.getMotor(DT_FL)->setSpeedFine(speed);
-  drivetrain.getMotor(DT_FR)->setSpeedFine(speed);
-  drivetrain.getMotor(DT_BL)->setSpeedFine(speed);
-  drivetrain.getMotor(DT_BR)->setSpeedFine(speed);
 }
 
+void diagonalStrafe(TRUE_DIRECTION direction1, TRUE_DIRECTION direction2, int speed){
+  if(direction1 == NORTH && direction2 == EAST){
+    
+  }
+}
+
+//function used to drive a motor
 void driveMotor(int motor, int direction, int speed){
-  if(direction = 1){
+  if(direction == 1){
     drivetrain.getMotor(motor)->run(FORWARD);
   }else{
-    drivetrain.getMotor(motor)->run(FORWARD);
+    drivetrain.getMotor(motor)->run(BACKWARD);
   }
 
   drivetrain.getMotor(motor)->setSpeed(speed);
 }
+
+//stop the robot
+void stop(){
+  drivetrain.getMotor(DT_FL)->setSpeed(0);
+  drivetrain.getMotor(DT_FR)->setSpeed(0);
+  drivetrain.getMotor(DT_BL)->setSpeed(0);
+  drivetrain.getMotor(DT_BR)->setSpeed(0);
+}
+
