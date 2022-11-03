@@ -58,17 +58,17 @@
 //define pins for ultrasonic pinmode
 //Trig pin is an output pin that shoots out a signal
 //Echo is the pin that recieves the value
-#define US_NORTH_TRIG 4
-#define US_NORTH_ECHO 5
+#define US_NORTH_TRIG 23
+#define US_NORTH_ECHO 22
 
-#define US_EAST_TRIG 6
-#define US_EAST_ECHO 7
+#define US_EAST_TRIG 31
+#define US_EAST_ECHO 30
 
-#define US_WEST_TRIG 28//8
-#define US_WEST_ECHO 29//9
+#define US_WEST_TRIG 35//8
+#define US_WEST_ECHO 34//9
 
-#define US_SOUTH_TRIG 32//10
-#define US_SOUTH_ECHO 33//11
+#define US_SOUTH_TRIG 27//10
+#define US_SOUTH_ECHO 26//11
 
 
 //define cartesian compass (true) directions
