@@ -1,4 +1,4 @@
-//holds all moement systems
+//holds all movement systems
 #include <Arduino.h>
 #include <Adafruit_MS_PWMServoDriver.h>
 #include <Adafruit_MotorShield.h>
