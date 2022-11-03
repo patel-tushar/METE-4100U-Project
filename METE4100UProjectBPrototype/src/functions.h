@@ -6,8 +6,14 @@
 
 //sensor file code commands
 float ultrasonicRead(TRUE_DIRECTION);
+void initializeGyro();
+void gyroTest();
+double gyroReadX();
+double gyroReadY();
+double gyroReadZ();
 
 //drivetrain functions
+void initializeSheild();
 int getEncoderFL();
 void setEncoderFL(int);
 int getEncoderFR();
@@ -22,9 +28,16 @@ void encoderEventFR();
 void encoderEventBL();
 void encoderEventBR();
 
-void driveForward(TRUE_DIRECTION, double);
-
+void drive(TRUE_DIRECTION, int);
+void diagonalStrafe(TRUE_DIRECTION, TRUE_DIRECTION, int);
+void rotate(int, int);
 void driveMotor(int, int, int);
+void stop();
 
 //main functions
 void setReferenceDirection(REF_DIRECTION);
+void getAllDistances();
+boolean checkPointCheck();
+void driveTo(double);
+void recentre();
+void kachow();

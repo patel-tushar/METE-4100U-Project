@@ -5,12 +5,37 @@
 #include "mapping.h"
 #include "functions.h"
 
+//setting variable for current direction of the robot
 TRUE_DIRECTION front;
 TRUE_DIRECTION left;
 TRUE_DIRECTION right;
 TRUE_DIRECTION back;
 
+//standard robot drive speed
+int standardSpeed = 150;
+
+//current distances
+float frontDistance;
+float leftDistance;
+float rightDistance;
+float backDistance;
+
+//checkpoints are points that are intermintently met to see if we have reached a point
+boolean checkPointReached; //determines if we have reached our current checkpoint
+int checkPointCounter; //keeps track of which check point we are on
+int totalCheckPoints; //number of checkpoints to reach
+
 void setup() {
+  Serial.begin(9600);
+  while (! Serial) {Serial.println("sucker");}
+  Serial.println("Speed 0 to 255");
+
+  //initialize the motor sheild for I2C
+  initializeSheild();
+
+  //initialize the gyro for I2C
+  //initializeGyro();
+  
   //inilialize encoder pins - all input pins
   pinMode(DT_FL_EN_C1, INPUT);
   pinMode(DT_FL_EN_C2, INPUT);
@@ -34,9 +59,14 @@ void setup() {
 
 
 void loop() {
-  // put your main code here, to run repeatedly:
-  driveMotor(DT_FL, 1, 100);
-
+  rotate(1, 150);
+  delay(1000);
+  stop();
+  delay(1000);
+  rotate(2, 150);
+  delay(1000);
+  stop();
+  delay(1000);
 }
 
 //sets the 
@@ -62,5 +92,91 @@ void setReferenceDirection(REF_DIRECTION direction){
     left = NORTH;
     back = WEST;
   }
+}
 
+//reads all distances on the ultrasonic sensors
+void getAllDistances(){
+  frontDistance = ultrasonicRead(front);
+  leftDistance = ultrasonicRead(left);
+  rightDistance = ultrasonicRead(right);
+  backDistance = ultrasonicRead(back);
+}
+
+
+
+//determines if we have reached our current checkpoint
+//also inurements the checkpoint counter
+boolean checkPointCheck(){
+  if(checkPointCounter == 1){
+    if(frontDistance <= 6 && frontDistance >= 3){
+      if(leftDistance <= 7  && frontDistance >= 2){
+        if(rightDistance <= 8 && leftDistance >= 2){
+          if(backDistance <= 3 && backDistance >= 2){
+            checkPointCounter++;
+            return true;
+          }
+        }
+      }
+    }
+  } else if(checkPointCounter == 2){
+    if(frontDistance <= 6 && frontDistance >= 3){
+      if(leftDistance <= 7  && frontDistance >= 2){
+        if(rightDistance <= 8 && leftDistance >= 2){
+          if(backDistance <= 3 && backDistance >= 2){
+            checkPointCounter++;
+            return true;
+          }
+        }
+      }
+    }
+  } else if(checkPointCounter == 3){
+    if(frontDistance <= 6 && frontDistance >= 3){
+      if(leftDistance <= 7  && frontDistance >= 2){
+        if(rightDistance <= 8 && leftDistance >= 2){
+          if(backDistance <= 3 && backDistance >= 2){
+            checkPointCounter++;
+            return true;
+          }
+        }
+      }
+    }
+  } else if (checkPointCounter == 4){
+    if(frontDistance <= 6 && frontDistance >= 3){
+      if(leftDistance <= 7  && frontDistance >= 2){
+        if(rightDistance <= 8 && leftDistance >= 2){
+          if(backDistance <= 3 && backDistance >= 2){
+            return true;
+          }
+        }
+      }
+    }
+  }
+  return false;
+}
+
+//drives until a certain distance in the "Front" region
+void driveTo(double distance){
+  do{
+    delay(25);
+    getAllDistances();
+    if(frontDistance > distance + 1){
+      drive(front, standardSpeed);
+    } else {
+      drive(back, standardSpeed);
+    }
+  } while(frontDistance > distance + 1 && frontDistance < distance - 1);
+
+  stop();
+}
+
+void recentre(){
+  
+}
+
+void kachow(){
+  recentre();
+  if(checkPointCounter == 1){
+    setReferenceDirection(R);
+    driveTo(3);
+  }
 }
