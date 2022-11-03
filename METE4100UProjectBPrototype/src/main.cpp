@@ -2,7 +2,6 @@
 #include <Adafruit_MS_PWMServoDriver.h>
 #include <Adafruit_MotorShield.h>
 #include <SPI.h>
-
 #include "mapping.h"
 #include "functions.h"
 
@@ -30,8 +29,12 @@ void setup() {
   Serial.begin(9600);
   while (! Serial) {Serial.println("sucker");}
   Serial.println("Speed 0 to 255");
-  //initialize the motor sheild
+
+  //initialize the motor sheild for I2C
   initializeSheild();
+
+  //initialize the gyro for I2C
+  //initializeGyro();
   
   //inilialize encoder pins - all input pins
   pinMode(DT_FL_EN_C1, INPUT);
@@ -56,9 +59,14 @@ void setup() {
 
 
 void loop() {
-  Serial.println(ultrasonicRead(WEST));
-  delay(5000);
-
+  rotate(1, 150);
+  delay(1000);
+  stop();
+  delay(1000);
+  rotate(2, 150);
+  delay(1000);
+  stop();
+  delay(1000);
 }
 
 //sets the 
@@ -146,15 +154,29 @@ boolean checkPointCheck(){
   return false;
 }
 
-//drives until a certain distance
-void driveTo(TRUE_DIRECTION direction, double distance){
-  double reading = 1000;
-  drive(direction, standardSpeed);
-
+//drives until a certain distance in the "Front" region
+void driveTo(double distance){
   do{
-    reading = ultrasonicRead(direction);
     delay(25);
-  } while(reading > distance + 0.75 && reading < distance - 0.75);
+    getAllDistances();
+    if(frontDistance > distance + 1){
+      drive(front, standardSpeed);
+    } else {
+      drive(back, standardSpeed);
+    }
+  } while(frontDistance > distance + 1 && frontDistance < distance - 1);
 
   stop();
+}
+
+void recentre(){
+  
+}
+
+void kachow(){
+  recentre();
+  if(checkPointCounter == 1){
+    setReferenceDirection(R);
+    driveTo(3);
+  }
 }

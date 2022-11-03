@@ -17,8 +17,6 @@ Adafruit_MotorShield drivetrain = Adafruit_MotorShield();
 void initializeSheild(){
   //set up analog resolution
   //analogReadResolution(12);
-
-
   if (!drivetrain.begin(1600, &Wire)) {   // create with the default frequency 1.6KHz
   // if (!AFMS.begin(1000)) {  // OR with a different frequency, say 1KHz
   Serial.println("Could not find Motor Shield. Check wiring.");
@@ -158,9 +156,36 @@ void drive(TRUE_DIRECTION direction, int speed){
   }
 }
 
+//diagonal strafe based on a north and south direction and an east and west direction
 void diagonalStrafe(TRUE_DIRECTION direction1, TRUE_DIRECTION direction2, int speed){
   if(direction1 == NORTH && direction2 == EAST){
-    
+    driveMotor(DT_FL, 2, speed);
+    driveMotor(DT_BR, 1, speed);
+  } else if (direction1 == NORTH && direction2 == WEST){
+    driveMotor(DT_FR, 1, speed);
+    driveMotor(DT_BL, 2, speed);
+  } else if (direction1 == SOUTH && direction2 == EAST){
+    driveMotor(DT_FR, 2, speed);
+    driveMotor(DT_BL, 1, speed);
+  } else if (direction1 == SOUTH && direction2 == WEST){
+    driveMotor(DT_FL, 2, speed);
+    driveMotor(DT_BR, 1, speed);
+  }
+}
+
+//rotate the motors in a certain direction
+
+void rotate(int direction, int speed){
+  if(direction == 1){
+    driveMotor(DT_FL, 2, speed);
+    driveMotor(DT_FR, 2, speed);
+    driveMotor(DT_BL, 2, speed);
+    driveMotor(DT_BR, 2, speed);
+  } else {
+    driveMotor(DT_FL, 1, speed);
+    driveMotor(DT_FR, 1, speed);
+    driveMotor(DT_BL, 1, speed);
+    driveMotor(DT_BR, 1, speed);
   }
 }
 
@@ -171,7 +196,6 @@ void driveMotor(int motor, int direction, int speed){
   }else{
     drivetrain.getMotor(motor)->run(BACKWARD);
   }
-
   drivetrain.getMotor(motor)->setSpeed(speed);
 }
 

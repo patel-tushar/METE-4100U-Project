@@ -3,7 +3,14 @@
 #include "ultrasonic.h"
 #include "functions.h"
 #include <Ultrasonic.h>
+#include <MPU6050.h>
+#include <Wire.h>
 
+//initialize gyro object
+MPU6050 gyroscope;
+vector_t gyro;
+
+//current used trigger and echo pins
 int trigger;
 int echo;
 
@@ -51,4 +58,45 @@ float ultrasonicRead(TRUE_DIRECTION direction){
     distance = (distance*slope) + constant;
 
     return distance;  
+}
+
+//gyroscope code
+
+//used to initialize gyro
+void initializeGyro(){
+    gyroscope.begin();
+
+    if(!gyroscope.available())
+    {
+        Serial.print("Unable to connect to MPU!");
+        while(1);
+    }
+
+    // set the scaling registers
+    gyroscope.setAccConfig(MPU6050_ACC_FULL_SCALE_2_G);
+    gyroscope.setGyroConfig(MPU6050_GYRO_FULL_SCALE_500_DPS);
+
+    // run the self calibration function, must not move the MPU during this function call!
+    gyroscope.calibrate();
+}
+
+//return the X angle for the gyroscope
+double gyroReadX(){
+    gyroscope.update();
+    gyro = gyroscope.getGyro();
+    return gyro.x;
+}
+
+//return the Y angle for the gyroscope
+double gyroReadY(){
+    gyroscope.update();
+    gyro = gyroscope.getGyro();
+    return gyro.y;
+}
+
+//return the Z angle for the gyroscope
+double gyroReadZ(){
+    gyroscope.update();
+    gyro = gyroscope.getGyro();
+    return gyro.z;
 }
